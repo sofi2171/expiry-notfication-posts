@@ -202,12 +202,12 @@ app.get('/api/expiry-warning', async (req, res) => {
     try {
         const now    = new Date();
         const nowISO = now.toISOString();
-        const in24h  = new Date(now.getTime() + 24 * 60 * 60 * 1000).toISOString();
+        const in30h  = new Date(now.getTime() + 30 * 60 * 60 * 1000).toISOString();
 
         // وہ posts جو اگلے 24 گھنٹوں میں expire ہونے والی ہیں اور warning ابھی نہیں گئی
         const snapshot = await db.collection('posts')
             .where('expiresAt', '>=', nowISO)
-            .where('expiresAt', '<=', in24h)
+.where('expiresAt', '<=', in30h)
             .where('expiryEmailSent', '==', false)
             .get();
 
